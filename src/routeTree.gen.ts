@@ -9,38 +9,176 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedTrabalhadoresRouteImport } from './routes/_authenticated/trabalhadores'
+import { Route as AuthenticatedPagamentosRouteImport } from './routes/_authenticated/pagamentos'
+import { Route as AuthenticatedEscalasRouteImport } from './routes/_authenticated/escalas'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedCheckinRouteImport } from './routes/_authenticated/checkin'
+import { Route as AuthenticatedEventosIndexRouteImport } from './routes/_authenticated/eventos.index'
+import { Route as AuthenticatedEventosNovoRouteImport } from './routes/_authenticated/eventos.novo'
+import { Route as AuthenticatedEventosIdRouteImport } from './routes/_authenticated/eventos.$id'
 
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRoute = AuthenticatedRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedTrabalhadoresRoute =
+  AuthenticatedTrabalhadoresRouteImport.update({
+    id: '/trabalhadores',
+    path: '/trabalhadores',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedPagamentosRoute = AuthenticatedPagamentosRouteImport.update({
+  id: '/pagamentos',
+  path: '/pagamentos',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedEscalasRoute = AuthenticatedEscalasRouteImport.update({
+  id: '/escalas',
+  path: '/escalas',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedCheckinRoute = AuthenticatedCheckinRouteImport.update({
+  id: '/checkin',
+  path: '/checkin',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedEventosIndexRoute =
+  AuthenticatedEventosIndexRouteImport.update({
+    id: '/eventos/',
+    path: '/eventos/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedEventosNovoRoute =
+  AuthenticatedEventosNovoRouteImport.update({
+    id: '/eventos/novo',
+    path: '/eventos/novo',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedEventosIdRoute = AuthenticatedEventosIdRouteImport.update({
+  id: '/eventos/$id',
+  path: '/eventos/$id',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/checkin': typeof AuthenticatedCheckinRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/escalas': typeof AuthenticatedEscalasRoute
+  '/pagamentos': typeof AuthenticatedPagamentosRoute
+  '/trabalhadores': typeof AuthenticatedTrabalhadoresRoute
+  '/eventos/$id': typeof AuthenticatedEventosIdRoute
+  '/eventos/novo': typeof AuthenticatedEventosNovoRoute
+  '/eventos/': typeof AuthenticatedEventosIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/checkin': typeof AuthenticatedCheckinRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/escalas': typeof AuthenticatedEscalasRoute
+  '/pagamentos': typeof AuthenticatedPagamentosRoute
+  '/trabalhadores': typeof AuthenticatedTrabalhadoresRoute
+  '/eventos/$id': typeof AuthenticatedEventosIdRoute
+  '/eventos/novo': typeof AuthenticatedEventosNovoRoute
+  '/eventos': typeof AuthenticatedEventosIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteWithChildren
+  '/login': typeof LoginRoute
+  '/_authenticated/checkin': typeof AuthenticatedCheckinRoute
+  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/escalas': typeof AuthenticatedEscalasRoute
+  '/_authenticated/pagamentos': typeof AuthenticatedPagamentosRoute
+  '/_authenticated/trabalhadores': typeof AuthenticatedTrabalhadoresRoute
+  '/_authenticated/eventos/$id': typeof AuthenticatedEventosIdRoute
+  '/_authenticated/eventos/novo': typeof AuthenticatedEventosNovoRoute
+  '/_authenticated/eventos/': typeof AuthenticatedEventosIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/checkin'
+    | '/dashboard'
+    | '/escalas'
+    | '/pagamentos'
+    | '/trabalhadores'
+    | '/eventos/$id'
+    | '/eventos/novo'
+    | '/eventos/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/login'
+    | '/checkin'
+    | '/dashboard'
+    | '/escalas'
+    | '/pagamentos'
+    | '/trabalhadores'
+    | '/eventos/$id'
+    | '/eventos/novo'
+    | '/eventos'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/login'
+    | '/_authenticated/checkin'
+    | '/_authenticated/dashboard'
+    | '/_authenticated/escalas'
+    | '/_authenticated/pagamentos'
+    | '/_authenticated/trabalhadores'
+    | '/_authenticated/eventos/$id'
+    | '/_authenticated/eventos/novo'
+    | '/_authenticated/eventos/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
+  LoginRoute: typeof LoginRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,12 +186,106 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/trabalhadores': {
+      id: '/_authenticated/trabalhadores'
+      path: '/trabalhadores'
+      fullPath: '/trabalhadores'
+      preLoaderRoute: typeof AuthenticatedTrabalhadoresRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/pagamentos': {
+      id: '/_authenticated/pagamentos'
+      path: '/pagamentos'
+      fullPath: '/pagamentos'
+      preLoaderRoute: typeof AuthenticatedPagamentosRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/escalas': {
+      id: '/_authenticated/escalas'
+      path: '/escalas'
+      fullPath: '/escalas'
+      preLoaderRoute: typeof AuthenticatedEscalasRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/checkin': {
+      id: '/_authenticated/checkin'
+      path: '/checkin'
+      fullPath: '/checkin'
+      preLoaderRoute: typeof AuthenticatedCheckinRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/eventos/': {
+      id: '/_authenticated/eventos/'
+      path: '/eventos'
+      fullPath: '/eventos/'
+      preLoaderRoute: typeof AuthenticatedEventosIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/eventos/novo': {
+      id: '/_authenticated/eventos/novo'
+      path: '/eventos/novo'
+      fullPath: '/eventos/novo'
+      preLoaderRoute: typeof AuthenticatedEventosNovoRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/eventos/$id': {
+      id: '/_authenticated/eventos/$id'
+      path: '/eventos/$id'
+      fullPath: '/eventos/$id'
+      preLoaderRoute: typeof AuthenticatedEventosIdRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
   }
 }
 
+interface AuthenticatedRouteChildren {
+  AuthenticatedCheckinRoute: typeof AuthenticatedCheckinRoute
+  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedEscalasRoute: typeof AuthenticatedEscalasRoute
+  AuthenticatedPagamentosRoute: typeof AuthenticatedPagamentosRoute
+  AuthenticatedTrabalhadoresRoute: typeof AuthenticatedTrabalhadoresRoute
+  AuthenticatedEventosIdRoute: typeof AuthenticatedEventosIdRoute
+  AuthenticatedEventosNovoRoute: typeof AuthenticatedEventosNovoRoute
+  AuthenticatedEventosIndexRoute: typeof AuthenticatedEventosIndexRoute
+}
+
+const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedCheckinRoute: AuthenticatedCheckinRoute,
+  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedEscalasRoute: AuthenticatedEscalasRoute,
+  AuthenticatedPagamentosRoute: AuthenticatedPagamentosRoute,
+  AuthenticatedTrabalhadoresRoute: AuthenticatedTrabalhadoresRoute,
+  AuthenticatedEventosIdRoute: AuthenticatedEventosIdRoute,
+  AuthenticatedEventosNovoRoute: AuthenticatedEventosNovoRoute,
+  AuthenticatedEventosIndexRoute: AuthenticatedEventosIndexRoute,
+}
+
+const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
+  AuthenticatedRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRoute: AuthenticatedRouteWithChildren,
+  LoginRoute: LoginRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
